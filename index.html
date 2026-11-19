@@ -4,7 +4,8 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>BUFF LIKE FREE FIRE - TRANG CHỦ</title>
-  <script async defer src="_assets/js/api.js"></script>
+  <!-- ✅ SỬA: Dùng CDN chính thức Cloudflare Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #0b0f19; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; position: relative; overflow-x: hidden; }
@@ -223,7 +224,6 @@
           return;
         }
 
-        // Token server trả về chính là "key" mà backend verify_and_buff cần
         const autoKey = tokenData.token;
 
         msgDiv.innerText = "⏳ Đang xác minh & buff like...";
@@ -235,7 +235,7 @@
           body: JSON.stringify({
             action: "verify_and_buff",
             uid: uid,
-            key: autoKey,           // ← key tự sinh, user không thấy
+            key: autoKey,
             userIp: userIp,
             turnstileToken: turnstileToken
           })
@@ -250,7 +250,6 @@
           alert(data.message);
         }
 
-        // Reset Turnstile để tránh dùng lại token cũ
         if (window.turnstile) window.turnstile.reset();
 
       } catch (err) {
